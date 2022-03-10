@@ -8,6 +8,7 @@
     "build": "run-p build:*",
     "build:css": "npm run generate:css -- --minify",
     "build:remix": "cross-env NODE_ENV=production remix build",
+    "db:seed": "ts-node prisma/seed.ts",
     "dev": "run-p dev:*",
     "dev:css": "npm run generate:css -- --watch",
     "dev:remix": "cross-env NODE_ENV=development remix dev",
@@ -23,6 +24,7 @@
     "@remix-run/react": "^1.2.3",
     "@remix-run/serve": "^1.2.3",
     "@types/justified-layout": "^4.1.0",
+    "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.3",
     "justified-layout": "^4.1.0",
     "probe-image-size": "^7.2.3",
@@ -33,6 +35,7 @@
   "devDependencies": {
     "@remix-run/dev": "^1.2.3",
     "@remix-run/eslint-config": "^1.2.3",
+    "@types/bcryptjs": "^2.4.2",
     "@types/probe-image-size": "^7.0.1",
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
@@ -43,6 +46,7 @@
     "postcss": "8.0.9",
     "prisma": "^3.10.0",
     "tailwindcss": "^3.0.23",
+    "ts-node": "^10.7.0",
     "typescript": "^4.5.5"
   },
   "engines": {

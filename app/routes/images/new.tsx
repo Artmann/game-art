@@ -5,8 +5,15 @@ import { Button } from '~/components/button';
 
 import { db } from '~/db/db.server';
 import { getImageDimensions } from '~/server/images.server';
+import { currentUser, isAdmin } from '~/server/user.server';
 
 export const action: ActionFunction = async({ request }) => {
+  const user = await currentUser(request)
+
+  if (!isAdmin(user)) {
+    return redirect('/sign-in')
+  }
+
   const body = await request.formData();
 
   const url = body.get('url')
