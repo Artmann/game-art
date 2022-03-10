@@ -11,7 +11,9 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async(): Promise<LoaderData> => {
-  const images = await db.image.findMany()
+  const images = await db.image.findMany({
+    orderBy: { createdAt: 'desc' }
+  })
 
   return {
     images
