@@ -59,8 +59,6 @@ export async function currentUser(request): Promise<User | undefined> {
     return
   }
 
-  console.log({ id })
-
   const user = await db.user.findUnique({
     where: {
       id

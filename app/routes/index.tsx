@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async(): Promise<LoaderData> => {
   })
 
   return {
-    images
+    images: images.sort((a, b) => Math.random() >= 0.5 ? 1 : -1)
   }
 }
 
