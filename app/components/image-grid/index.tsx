@@ -4,6 +4,7 @@ import { CSSProperties, ReactElement, useEffect, useRef, useState } from 'react'
 type GridImage = {
   height: number
   width: number
+  url: string
 }
 
 type ImageGridProps = {

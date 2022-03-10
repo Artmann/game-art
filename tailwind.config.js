@@ -3,7 +3,12 @@ module.exports = {
     './app/**/*.{ts,tsx,jsx,js}'
   ],
   theme: {
-    extend: {},
+    extend: {
+      spacing: {
+        128: '32rem',
+        256: '64rem'
+      }
+    },
   },
   plugins: [],
 }
