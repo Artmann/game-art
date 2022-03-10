@@ -26,11 +26,12 @@ export const action: ActionFunction = async({ request }) => {
     request.headers.get('Cookie')
   )
 
+  console.log({ id: user.id })
   session.set('userId', user.id)
 
   return redirect('/', {
     headers: {
-      'Set-Cookie': commitSession(session)
+      'Set-Cookie': await commitSession(session)
     }
   })
 }

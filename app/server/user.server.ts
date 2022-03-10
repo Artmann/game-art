@@ -48,15 +48,17 @@ export async function authenticate(email: string, password: string): Promise<Use
   return user
 }
 
-export async function currentUser(request): Promise<User | undefined> {
+export async function currentUser(request): Promise<User | null> {
   const session = await getSession(
     request.headers.get('Cookie')
   )
 
   const id = session.get('userId')
 
+  console.log({id})
+
   if (!id) {
-    return
+    return null
   }
 
   const user = await db.user.findUnique({

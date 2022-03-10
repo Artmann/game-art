@@ -9,7 +9,7 @@ import { currentUser, isAdmin } from '~/server/user.server';
 
 export const action: ActionFunction = async({ request }) => {
   const user = await currentUser(request)
-
+  console.log(user)
   if (!isAdmin(user)) {
     return redirect('/sign-in')
   }

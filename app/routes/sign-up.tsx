@@ -16,7 +16,7 @@ export const action: ActionFunction = async({ request }) => {
     throw new Error('Both email and password is required.')
   }
 
-  const user = await createUser(email, password)
+  const user = await createUser(email.toString(), password.toString())
 
   const session = await getSession(
     request.headers.get('Cookie')
@@ -26,7 +26,7 @@ export const action: ActionFunction = async({ request }) => {
 
   return redirect('/', {
     headers: {
-      'Set-Cookie': commitSession(session)
+      'Set-Cookie': await commitSession(session)
     }
   })
 }
