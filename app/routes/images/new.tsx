@@ -18,9 +18,13 @@ export const action: ActionFunction = async({ request }) => {
 
   const url = body.get('url')
 
+  if (!url) {
+    throw new Error('url is required.')
+  }
+
   const [ existingImage ] = await db.image.findMany({
     where: {
-      url
+      url: url.toString()
     }
   })
 
@@ -28,7 +32,7 @@ export const action: ActionFunction = async({ request }) => {
     return redirect(`/images/${ existingImage.id }`)
   }
 
-  const { height, width } = await getImageDimensions(url)
+  const { height, width } = await getImageDimensions(url.toString())
 
   const image = await db.image.create({
     data: {

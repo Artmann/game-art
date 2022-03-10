@@ -70,7 +70,7 @@ export async function currentUser(request): Promise<User | null> {
   return user
 }
 
-export function isAdmin(user: User | undefined): boolean {
+export function isAdmin(user: User | undefined | null): boolean {
   if (!user) {
     return false
   }

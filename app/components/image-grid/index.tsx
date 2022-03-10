@@ -2,6 +2,7 @@ import createJustifiedLayout from 'justified-layout'
 import { CSSProperties, ReactElement, useEffect, useRef, useState } from 'react'
 
 type GridImage = {
+  id: string
   height: number
   width: number
   url: string
@@ -84,7 +85,8 @@ type ImageTileProps = {
 function ImageTile({ image, style }: ImageTileProps): ReactElement {
   return (
     <a
-      href="block"
+      className="block"
+      href={ `/images/${ image.id }` }
       style={style}
     >
       <img
