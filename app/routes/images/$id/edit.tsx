@@ -5,9 +5,10 @@ import { ActionFunction, LoaderFunction, redirect, useLoaderData } from 'remix'
 import { ImageForm } from '~/components/image-form'
 import { db } from '~/db/db.server'
 import { currentUser, isAdmin } from '~/server/user.server'
-import { ImageService } from '~/services/images'
+import { ImageDto, ImageService } from '~/services/images'
 
-type LoadData = {
+type LoaderData = {
+  image: ImageDto
   tags: Tag[]
 }
 
@@ -18,9 +19,13 @@ export const loader: LoaderFunction = async({ params, request }) => {
     return redirect('/sign-in')
   }
 
+  const imageService = new ImageService()
+  const image = await imageService.findImage(params.id || '')
+
   const tags = await db.tag.findMany({})
 
   return {
+    image,
     tags
   }
 }
@@ -34,15 +39,22 @@ export const action: ActionFunction = async({ request }) => {
 
   const body = await request.formData()
 
+  const id = (body.get('id') ?? '').toString()
   const url = (body.get('url') ?? '').toString()
   const tagIds = (body.getAll('tagIds') ?? []) as string[]
+
+  if (!id) {
+    throw new Response('Not Found.', {
+      status: 404
+    })
+  }
 
   if (!url) {
     throw new Error('url is required.')
   }
 
   const imageService = new ImageService()
-  const image = await imageService.createImage(url)
+  const image = await imageService.updateImage(id, url)
 
   await imageService.updateTags(image.id, tagIds)
 
@@ -50,17 +62,21 @@ export const action: ActionFunction = async({ request }) => {
 }
 
 export default function NewImageRoute(): ReactElement {
-  const { tags } = useLoaderData<LoadData>()
-  const [ draft, setDraft ] = useState({})
+  const { image, tags } = useLoaderData<LoaderData>()
+
+  const [ draft, setDraft ] = useState({
+    ...image
+  })
 
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-xl mb-8">
-        New Image
+        Edit Image
       </h1>
 
       <ImageForm
         draft={ draft }
+        id= { image.id }
         updateDraft={ setDraft }
         tags={ tags }
       />

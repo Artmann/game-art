@@ -26,7 +26,7 @@ export function ImageGrid({ images }: ImageGridProps): ReactElement {
         }
       )
     )
-  }, [ maxWidth ])
+  }, [ images, maxWidth ])
 
   useEffect(() => {
     const resize = () => {
@@ -63,11 +63,11 @@ export function ImageGrid({ images }: ImageGridProps): ReactElement {
             image={ image }
             key={ index }
             style={{
-              height: layout.boxes[index].height,
-              left: layout.boxes[index].left,
+              height: layout.boxes[index]?.height ?? 300,
+              left: layout.boxes[index]?.left ?? 0,
               position: 'absolute',
-              top: layout.boxes[index].top,
-              width: layout.boxes[index].width,
+              top: layout.boxes[index]?.top ?? 0,
+              width: layout.boxes[index]?.width ?? 533,
             }}
           />
         ))

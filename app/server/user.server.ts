@@ -55,8 +55,6 @@ export async function currentUser(request): Promise<User | null> {
 
   const id = session.get('userId')
 
-  console.log({id})
-
   if (!id) {
     return null
   }
