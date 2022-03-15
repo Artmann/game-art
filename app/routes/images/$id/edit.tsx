@@ -69,7 +69,7 @@ export default function NewImageRoute(): ReactElement {
   })
 
   return (
-    <div className="container mx-auto mt-8">
+    <div>
       <h1 className="text-xl mb-8">
         Edit Image
       </h1>

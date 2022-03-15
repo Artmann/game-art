@@ -1,4 +1,5 @@
 import {
+  Link,
   Links,
   LinksFunction,
   LiveReload,
@@ -14,7 +15,7 @@ import styles from './tailwind.css'
 
 export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-  { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossOrigin: 'true' },
+  { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
   { rel: 'stylesheet', href: globalStyles },
   { rel: 'stylesheet', href: styles },
   { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap' }
@@ -34,7 +35,21 @@ export default function App() {
         <Links />
       </head>
       <body className="text-gray-700">
-        <Outlet />
+
+        <div className="container mx-auto my-8">
+          <div className="mb-8 flex">
+            <div>
+              <Link
+                className="font-medium"
+                to="/"
+              >
+                Game Art Board
+              </Link>
+            </div>
+          </div>
+          <Outlet />
+        </div>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

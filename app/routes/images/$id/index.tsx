@@ -45,7 +45,7 @@ export default function Index(): ReactElement {
   const { image, tags } = useLoaderData<LoaderData>()
 
   return (
-    <div className="container mx-auto mt-8 flex flex-col items-center">
+    <div className="flex flex-col items-center">
       <div className="flex mb-8 w-full">
         <div className="flex-1"></div>
         <div>

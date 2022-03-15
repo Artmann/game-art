@@ -5,7 +5,7 @@ import { ActionFunction, LoaderFunction, redirect, useLoaderData } from 'remix'
 import { ImageForm } from '~/components/image-form'
 import { db } from '~/db/db.server'
 import { currentUser, isAdmin } from '~/server/user.server'
-import { ImageService } from '~/services/images'
+import { ImageDto, ImageService } from '~/services/images'
 
 type LoadData = {
   tags: Tag[]
@@ -51,10 +51,16 @@ export const action: ActionFunction = async({ request }) => {
 
 export default function NewImageRoute(): ReactElement {
   const { tags } = useLoaderData<LoadData>()
-  const [ draft, setDraft ] = useState({})
+  const [ draft, setDraft ] = useState<ImageDto>({
+    id: '',
+    height: 0,
+    tagIds: [],
+    width: 0,
+    url: ''
+  })
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="w-full">
       <h1 className="text-xl mb-8">
         New Image
       </h1>

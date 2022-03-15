@@ -39,7 +39,7 @@ export default function Index(): ReactElement {
   }) : images
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="w-full">
 
       <div className="flex mb-8">
         <div className="flex-1"></div>
