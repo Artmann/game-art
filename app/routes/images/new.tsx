@@ -3,7 +3,6 @@ import { ReactElement, useState } from 'react'
 import { ActionFunction, LoaderFunction, redirect, useLoaderData } from 'remix'
 
 import { ImageForm } from '~/components/image-form'
-import { db } from '~/db/db.server'
 import { currentUser, isAdmin } from '~/server/user.server'
 import { ImageDto, ImageService } from '~/services/images'
 
@@ -18,7 +17,8 @@ export const loader: LoaderFunction = async({ params, request }) => {
     return redirect('/sign-in')
   }
 
-  const tags = await db.tag.findMany({})
+  const imageService = new ImageService()
+  const tags = await imageService.listTags()
 
   return {
     tags

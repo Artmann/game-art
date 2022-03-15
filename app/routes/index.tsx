@@ -6,7 +6,6 @@ import { Button } from '~/components/button'
 
 import { ImageGrid } from '~/components/image-grid'
 import { TagList } from '~/components/tag-list'
-import { db } from '~/db/db.server'
 import { ImageDto, ImageService } from '~/services/images'
 
 type LoaderData = {
@@ -18,7 +17,7 @@ export const loader: LoaderFunction = async(): Promise<LoaderData> => {
   const imageService = new ImageService()
 
   const images = await imageService.listImage()
-  const tags = await db.tag.findMany({})
+  const tags = await imageService.listTags()
 
   return {
     images,

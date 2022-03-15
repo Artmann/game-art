@@ -1,24 +1,22 @@
-import { Image, Tag } from '@prisma/client'
+import { Tag } from '@prisma/client'
 import { useLoaderData } from '@remix-run/react'
 import { ReactElement } from 'react'
 import { LoaderFunction, } from 'remix'
 import { Button } from '~/components/button'
 
-import { db } from '~/db/db.server'
+import { ImageDto, ImageService } from '~/services/images'
 
 type LoaderData = {
-  image: Image
+  image: ImageDto
   tags: Tag[]
 }
 
 export const loader: LoaderFunction = async({ params }): Promise<LoaderData> => {
   const { id } = params
 
-  const image = await db.image.findUnique({
-    where: {
-      id
-    }
-  })
+  const imageService = new ImageService()
+
+  const image = await imageService.findImage(id || '')
 
   if (!image) {
     throw new Response('Not Found.', {
@@ -26,14 +24,7 @@ export const loader: LoaderFunction = async({ params }): Promise<LoaderData> => 
     })
   }
 
-  const tags = (await db.tagsOnImages.findMany({
-    where: {
-      imageId: image.id
-    },
-    include: {
-      tag: true
-    }
-  })).map(t => t.tag)
+  const tags = await imageService.listTags()
 
   return {
     image,
@@ -60,7 +51,12 @@ export default function Index(): ReactElement {
         />
 
         <div>
-          { tags.map(t => t.name).join(', ') }
+          {
+            image.tagIds
+              .map(id => tags.find(t => t.id === id))
+              .map(t => t?.name)
+              .join(', ')
+          }
         </div>
     </div>
   );

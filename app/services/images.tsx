@@ -1,4 +1,4 @@
-import { Image } from '@prisma/client'
+import { Image, Tag } from '@prisma/client'
 
 import { db } from '~/db/db.server'
 import { getImageDimensions } from '~/server/images.server'
@@ -54,6 +54,16 @@ export class ImageService {
     })
 
     return images.map(this.transformImage)
+  }
+
+  async listTags(): Promise<Tag[]> {
+    const tags = await db.tag.findMany({
+      orderBy: {
+        name: 'asc'
+      }
+    })
+
+    return tags
   }
 
   async updateImage(id: string, url: string): Promise<Image> {
